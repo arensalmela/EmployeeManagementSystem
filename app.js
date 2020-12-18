@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
 
   user: "root",
 
-  password: "",
-  database: "",
+  password: "sqlroot123",
+  database: "employee_tracker_db",
 });
 
 // connect to the mysql server and sql database
@@ -26,24 +26,71 @@ function start() {
     .prompt({
       name: "action",
       type: "list",
-      message:
-        "Would you like to add department, roles, and employees. Would you like to update employee roles? Or would you like to view the employee data base?",
+      message: "Please select an option",
       choices: [
-        "ADD department, roles, or employees",
+        "VIEW roles, employees or departments",
         "UPDATE employee roles",
-        "VIEW employee database",
+        "ADD department, roles, or employees",
+        "QUIT",
       ],
     })
     .then(function (answer) {
-      // based on their answer, either call the bid or the post functions
+      // based on their answer, run the specified function
       if (answer.action === "ADD department, roles, or employees") {
         addAction();
       } else if (answer.action === "UPDATE employee roles") {
         updateAction();
-      } else if (answer.action === "VIEW employee database") {
+      } else if (answer.action === "VIEW roles, employees or departments") {
         viewAction();
-      } else {
+      } else if (answer.action === "QUIT") {
         connection.end();
       }
     });
+}
+
+function viewAction() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "viewSelection",
+        message: "Would you like to view employees, roles, or departments",
+        choices: ["EMPLOYEES", "ROLES", "DEPARTMENTS", "RETURN"],
+      },
+    ])
+    .then(function (answer) {
+      if (answer.viewSelection === "EMPLOYEES") {
+        viewEmployees();
+      } else if (answer.viewSelection === "ROLES") {
+        viewRoles();
+      } else if (answer.viewSelection === "DEPARTMENTS") {
+        viewDeparments();
+      } else if (answer.viewSelection === "RETURN") {
+        start();
+      }
+    });
+}
+
+function viewEmployees() {
+  connection.query("SELECT * FROM employee", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    viewAction();
+  });
+}
+
+function viewRoles() {
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    viewAction();
+  });
+}
+
+function viewDeparments() {
+  connection.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    viewAction();
+  });
 }
