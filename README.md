@@ -1,8 +1,12 @@
 # Employee Management System
 
-## Github Username
+## Video Walkthrough
 
-https://github.com/arensalmela
+https://drive.google.com/file/d/1E1j15wkfw_60M3aKCtIJEzzhAyjapU2a/view?usp=sharing
+
+## Github Repository
+
+https://github.com/arensalmela/EmployeeManagementSystem
 
 ## License
 
@@ -14,7 +18,7 @@ This is a command line application that allows the user to view departments, rol
 
 ## Installation Instructions
 
-MySQL and InquirerJs are required.
+MySQL and Inquirer are required.
 
 ## Github Username
 
