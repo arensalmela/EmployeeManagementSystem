@@ -72,7 +72,7 @@ function addAction() {
 }
 // Used bamazon class activity as reference
 
-// User input to add employee info.
+// Add employee info.
 function addEmployees() {
   inquirer
     .prompt([
@@ -92,6 +92,11 @@ function addEmployees() {
         message:
           "Please enter role id of new employee. Return to view roles to see options.",
       },
+      {
+        type: "input",
+        name: "manager",
+        message: "Please enter manager id of new employee (if applicable)",
+      },
     ])
     // Input being passed into table
     .then(function (answer) {
@@ -102,6 +107,7 @@ function addEmployees() {
           first_name: answer.firstName,
           last_name: answer.lastName,
           role_id: answer.role,
+          manager_id: answer.manager,
         },
         function (err, data) {
           if (err) throw err;
@@ -111,6 +117,9 @@ function addEmployees() {
       );
     });
 }
+
+// Add role info
+
 function addRoles() {
   inquirer
     .prompt([
@@ -149,6 +158,9 @@ function addRoles() {
       );
     });
 }
+
+// Add department info
+
 function addDepartments() {
   inquirer
     .prompt([
@@ -174,6 +186,8 @@ function addDepartments() {
       );
     });
 }
+
+// Selecting table to view
 
 function viewAction() {
   inquirer
@@ -224,7 +238,7 @@ function viewDeparments() {
   });
 }
 
-//Update Role
+// Update Role
 
 function updateEmployeeRole() {
   inquirer
