@@ -195,6 +195,8 @@ function viewAction() {
     });
 }
 
+// View all tables
+
 function viewEmployees() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
@@ -217,4 +219,42 @@ function viewDeparments() {
     console.table(res);
     viewAction();
   });
+}
+
+//Update Role
+
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "employee",
+        message: "Please enter the id of the employee to change there role",
+      },
+      {
+        type: "input",
+        name: "roleChange",
+        message: "What is this employees' new role?",
+      },
+    ])
+    .then(function (answers) {
+      const query = "UPDATE employee SET ? WHERE ?";
+      connection.query(
+        query,
+        [
+          {
+            role_id: parseInt(answers.roleChange),
+          },
+          {
+            employee_id: parseInt(answers.employee),
+          },
+        ],
+
+        function (err, res) {
+          if (err) throw err;
+
+          start();
+        }
+      );
+    });
 }
