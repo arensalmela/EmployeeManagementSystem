@@ -64,7 +64,7 @@ function addAction() {
       } else if (answer.addSelection === "ROLES") {
         addRoles();
       } else if (answer.addSelection === "DEPARTMENTS") {
-        addDeparments();
+        addDepartments();
       } else if (answer.addSelection === "RETURN") {
         start();
       }
@@ -127,7 +127,7 @@ function addRoles() {
         type: "input",
         name: "department",
         message:
-          "Please enter department id of new role. Return to view departments to see options.",
+          "Please enter department id of new role. Return to view departments to see options",
       },
     ])
     // Input being passed into table
@@ -139,6 +139,30 @@ function addRoles() {
           title: answer.roleTitle,
           salary: answer.salary,
           department_id: answer.department,
+        },
+        function (err, data) {
+          if (err) throw err;
+          start();
+        }
+      );
+    });
+}
+function addDepartments() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "department",
+        message: "What is the name of the department you are adding?",
+      },
+    ])
+    // Input being passed into table
+    .then(function (answer) {
+      const query = "INSERT into department SET ?";
+      connection.query(
+        query,
+        {
+          name: answer.department,
         },
         function (err, data) {
           if (err) throw err;
