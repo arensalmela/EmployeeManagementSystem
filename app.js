@@ -39,12 +39,75 @@ function start() {
       if (answer.action === "ADD department, roles, or employees") {
         addAction();
       } else if (answer.action === "UPDATE employee roles") {
-        updateAction();
+        updateEmployeeRole();
       } else if (answer.action === "VIEW roles, employees or departments") {
         viewAction();
       } else if (answer.action === "QUIT") {
         connection.end();
       }
+    });
+}
+
+function addAction() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "addSelection",
+        message: "Select what field where you would like to make an addition",
+        choices: ["EMPLOYEES", "ROLES", "DEPARTMENTS", "RETURN"],
+      },
+    ])
+    .then(function (answer) {
+      if (answer.addSelection === "EMPLOYEES") {
+        addEmployees();
+      } else if (answer.addSelection === "ROLES") {
+        addRoles();
+      } else if (answer.addSelection === "DEPARTMENTS") {
+        addDeparments();
+      } else if (answer.addSelection === "RETURN") {
+        start();
+      }
+    });
+}
+// Used bamazon class activity as reference
+
+// User input to add employee info.
+function addEmployees() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "Please enter first name of new employee",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "Please enter last name of new employee",
+      },
+      {
+        type: "input",
+        name: "role",
+        message:
+          "Please enter role id of new employee. Return to view roles to see options.",
+      },
+    ])
+    // Input being passed into table
+    .then(function (answer) {
+      const query = "INSERT into employee SET ?";
+      connection.query(
+        query,
+        {
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_id: answer.role,
+        },
+        function (err, data) {
+          if (err) throw err;
+          start();
+        }
+      );
     });
 }
 
