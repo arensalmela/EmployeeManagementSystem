@@ -110,6 +110,43 @@ function addEmployees() {
       );
     });
 }
+function addRoles() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "roleTitle",
+        message: "Please enter the new role",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "Please enter salary for new role",
+      },
+      {
+        type: "input",
+        name: "department",
+        message:
+          "Please enter department id of new role. Return to view departments to see options.",
+      },
+    ])
+    // Input being passed into table
+    .then(function (answer) {
+      const query = "INSERT into role SET ?";
+      connection.query(
+        query,
+        {
+          title: answer.roleTitle,
+          salary: answer.salary,
+          department_id: answer.department,
+        },
+        function (err, data) {
+          if (err) throw err;
+          start();
+        }
+      );
+    });
+}
 
 function viewAction() {
   inquirer
