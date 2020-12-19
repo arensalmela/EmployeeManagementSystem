@@ -105,6 +105,7 @@ function addEmployees() {
         },
         function (err, data) {
           if (err) throw err;
+          console.log("Employee successfully added");
           start();
         }
       );
@@ -142,6 +143,7 @@ function addRoles() {
         },
         function (err, data) {
           if (err) throw err;
+          console.log("Role successfully added");
           start();
         }
       );
@@ -166,6 +168,7 @@ function addDepartments() {
         },
         function (err, data) {
           if (err) throw err;
+          console.log("Department successfully added");
           start();
         }
       );
@@ -252,7 +255,7 @@ function updateEmployeeRole() {
 
         function (err, res) {
           if (err) throw err;
-
+          console.log("Employee role successfully updated");
           start();
         }
       );
